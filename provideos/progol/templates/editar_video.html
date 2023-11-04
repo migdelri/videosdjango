@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ usuario_seleccionado }}</title>
+    <!-- Agrega los enlaces a Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilos adicionales si los necesitas */
+        body {
+            padding-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center"> <!-- Contenedor de Bootstrap -->
+        <h1>El video se agregará al usuario</h1>
+        <form method="post" class="mt-4"> <!-- Agrega un margen top -->
+            {% csrf_token %}
+            <div class="Form-Control">
+            <div class="form-group">
+                {{ form.nombreVideo.errors}}
+                {{ form.nombreVideo.label_tag}}
+                {{ form.nombreVideo}}
+            </div>
+            <div class="form-group">
+                {{ form.extVideo.errors }}
+                {{ form.extVideo.label_tag }}
+                {{ form.extVideo}}
+            </div>
+            <div class="form-group">
+                {{ form.idUsuario.errors }}
+                {{ form.idUsuario.label_tag}}
+                {{ form.idUsuario}}
+            </div>
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">Subir Video</button>
+            <a href="{% url 'usuarios' %}"" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+    <!-- Agrega los scripts de Bootstrap -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

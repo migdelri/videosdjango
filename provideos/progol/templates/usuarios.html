@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title class="main-title">CRUD de Usuarios</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="container"> <!-- Bootstrap container class -->
+    <form action="{% url 'saveUser' %}" method="POST">
+        {% csrf_token %}
+        <h2>Crear Usuario</h2>
+        <div class="form-group">
+            <label for="idNomina">ID de Nómina:</label>
+            <input type="text" id="idNomina" name="idNomina" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" class="form-control">
+        </div>
+        <input type="submit" value="Guardar" class="btn btn-primary">
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>    
+        {% endif %}
+    </form>
+
+    <!-- Tabla para mostrar los usuarios existentes -->
+    <h2>Usuarios</h2>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>IdNómina</th>
+                <th>Nombre</th>
+                <th>Borrar usuario</th>
+                <th>Editar usuario</th>
+                <th>Subir Video</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.idNomina }}</td>
+                    <td>{{ usuario.nombre }}</td>
+                    <td><a id="dlt" href="{% url 'deletUser' usuario.idNomina %}" class="btn btn-danger" onclick="confirmDelete()">Borrar</a></td>
+                    <td><a href="{% url 'editUser' usuario.idNomina %}" class="btn btn-primary">Editar</a></td>
+                    <td><a href="{% url 'subirVideo' usuario.idNomina %}" class="btn btn-secondary"> + </a>
+                        <a href="{% url 'listarVideos' usuario.idNomina %}" class="btn btn-secondary"> Listar </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Script de Bootstrap (si no está ya incluido en la plantilla base) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (!confirm('¿Realmente desea eliminar?')) {
+                event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+            }
+        }
+    </script>
+</body>
+</html>
